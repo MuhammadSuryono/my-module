@@ -24,7 +24,7 @@ func Handler() *gin.Engine {
 	}))
 
 	server.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
+		c.JSON(http.StatusNotFound, gin.H{"code": 404, "message": "NOT_METHODE_ALLOWED"})
 	})
 
 	server.GET("/", func(c *gin.Context) {
