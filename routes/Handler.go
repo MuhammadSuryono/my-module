@@ -26,5 +26,11 @@ func Handler() *gin.Engine {
 	server.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
 	})
+
+	server.GET("/", func(c *gin.Context) {
+		c.Request.URL.Path = "/version"
+		server.HandleContext(c)
+	})
+
 	return server
 }
