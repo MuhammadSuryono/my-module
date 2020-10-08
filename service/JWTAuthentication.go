@@ -60,7 +60,6 @@ type jwtServices struct {
 	issure    string
 }
 
-// //auth-jwt
 func JWTAuthService() JWTService {
 	return &jwtServices{
 		secretKey: getSecretKey(),
