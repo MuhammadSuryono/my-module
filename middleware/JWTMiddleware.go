@@ -3,8 +3,8 @@ package middleware
 import (
 	"fmt"
 	"net/http"
-	"user-okta-service/src/service"
 
+	"github.com/MuhammadSuryono1997/framework-okta/service"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
