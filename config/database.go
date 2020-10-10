@@ -21,14 +21,14 @@ func (dbConfig *DBConfig) GetConnectionString() string {
 	)
 }
 
-var db *gorm.DB
+var database *gorm.DB
 
 func Init(config DBConfig) {
 	db, err := gorm.Open("mysql", config.GetConnectionString())
 	if err != nil {
 		fmt.Println("error ", err)
 	}
-	db = db
+	database = db
 	pingTicker := time.NewTicker(15 * time.Second)
 	pingDone := make(chan bool)
 	go func() {
@@ -47,7 +47,7 @@ func Init(config DBConfig) {
 }
 
 func GetDb() *gorm.DB {
-	return db
+	return database
 }
 
 func pingDb(db *sql.DB) bool {
