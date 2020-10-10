@@ -1,14 +1,24 @@
 package routes
 
 import (
+	"log"
 	"net/http"
+	"os"
 	"time"
 
+	"github.com/MuhammadSuryono1997/framework-okta/response"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func Handler() *gin.Engine {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	server := gin.Default()
 
 	server.Use(cors.New(cors.Config{
@@ -31,6 +41,8 @@ func Handler() *gin.Engine {
 		c.Request.URL.Path = "/version"
 		server.HandleContext(c)
 	})
+
+	server.GET("/version", response.App(os.Getenv("APP_NAME"), os.Getenv("VERSION"), "TEAM_BACKEND_OKTAPOS"))
 
 	return server
 }

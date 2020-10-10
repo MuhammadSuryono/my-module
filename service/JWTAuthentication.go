@@ -47,7 +47,7 @@ func (service *jwtServices) ValidateKey() *rsa.PublicKey {
 
 //jwt service
 type JWTService interface {
-	GenerateToken(register interface{}) string
+	GenerateToken(obj interface{}) string
 	ValidateToken(token string) (*jwt.Token, error)
 }
 type authCustomClaims struct {
@@ -75,10 +75,10 @@ func getSecretKey() string {
 	return secret
 }
 
-func (service *jwtServices) GenerateToken(register interface{}) string {
+func (service *jwtServices) GenerateToken(obj interface{}) string {
 	init_key()
 	claims := &authCustomClaims{
-		register,
+		obj,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 1).Unix(),
 			Issuer:    service.issure,
