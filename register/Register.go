@@ -10,6 +10,6 @@ type RegisterService interface {
 	services.RegisterService
 }
 
-type RegisterController struct {
-	registercontroller controllers.RegisterControllerStatic
+type RegisterController interface {
+	controllers.RegisterControllerStatic
 }
