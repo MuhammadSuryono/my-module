@@ -41,5 +41,5 @@ func RegisterUser(credential *models.TMerchant) bool {
 }
 
 func (info *registerInformation) RegisterStatic(devid string, nohp string) bool {
-	return info.device_id == devid && info.no_hp == nohp
+	return "123456789" == devid && "0895355698652" == nohp
 }
