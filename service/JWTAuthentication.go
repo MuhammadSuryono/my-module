@@ -2,6 +2,7 @@ package service
 
 import (
 	"crypto/rsa"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -38,6 +39,7 @@ func init_key() {
 func fatal(err error) {
 	if err != nil {
 		log.Fatal(err)
+		fmt.Println(err.Error())
 	}
 }
 
