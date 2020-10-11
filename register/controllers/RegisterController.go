@@ -46,6 +46,12 @@ type registerControllerStatic struct {
 	registerService services.RegisterServiceStatic
 }
 
+func RegisterHandlerStatic(registerService services.RegisterServiceStatic) RegisterControllerStatic {
+	return &registerControllerStatic{
+		registerService: registerService,
+	}
+}
+
 func (controller *registerControllerStatic) RegisterStatic(ctx *gin.Context) string {
 	var credential *models.TMerchant
 	err := ctx.ShouldBind(&credential)
