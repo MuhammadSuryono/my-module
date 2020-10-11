@@ -8,6 +8,7 @@ func Json(code int, message string, obj interface{}) {
 }
 
 func App(app string, message string, author string) gin.HandlerFunc {
-	var c gin.Context
-	c.JSON(200, gin.H{"app_name": app, "version": message, "author": author})
+	return func(c *gin.Context) {
+		c.JSON(200, gin.H{"app_name": app, "version": message, "author": author})
+	}
 }
