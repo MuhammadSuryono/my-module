@@ -62,5 +62,5 @@ func (controller *registerControllerStatic) RegisterStatic(ctx *gin.Context) str
 	if isUserAuthenticated {
 		return "Number is registered"
 	}
-	return service.JWTAuthService().GenerateToken(credential)
+	return credential.NoHp
 }
