@@ -2,6 +2,6 @@ package models
 
 //Login credential
 type TMerchant struct {
-	DeviceId string `form:"device_id"`
-	NoHp     string `form:"no_hp"`
+	DeviceId string `json:"device_id"`
+	NoHp     string `json:"no_hp"`
 }
