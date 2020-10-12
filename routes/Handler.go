@@ -29,6 +29,7 @@ func Handler() *gin.Engine {
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
 			return origin == "*"
+
 		},
 		MaxAge: 12 * time.Hour,
 	}))
