@@ -55,3 +55,7 @@ func isGoogleAuthenticatorCompatible(base32Secret string) bool {
 	cleaned = strings.Replace(cleaned, " ", "", -1)
 	return len(cleaned) == 16
 }
+
+func ValidateOtp(otp string) {
+
+}

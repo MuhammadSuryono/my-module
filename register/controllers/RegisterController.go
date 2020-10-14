@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"github.com/MuhammadSuryono1997/framework-okta/base/service"
 	"github.com/MuhammadSuryono1997/framework-okta/register/models"
 	"github.com/MuhammadSuryono1997/framework-okta/register/services"
-	"github.com/MuhammadSuryono1997/framework-okta/service"
 	"github.com/gin-gonic/gin"
 )
 

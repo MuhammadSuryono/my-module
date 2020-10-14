@@ -2,8 +2,8 @@ package services
 
 import (
 	"fmt"
+	"github.com/MuhammadSuryono1997/framework-okta/base/db"
 
-	"github.com/MuhammadSuryono1997/framework-okta/config"
 	"github.com/MuhammadSuryono1997/framework-okta/register/models"
 )
 
@@ -30,7 +30,7 @@ func StaticRegisterService() RegisterServiceStatic {
 func RegisterUser(credential *models.TMerchant) bool {
 	var merchant []models.TMerchant
 
-	err := config.GetDb().Where("no_hp = ? AND device_id = ?", credential.NoHp, credential.DeviceId).First(&merchant)
+	err := db.GetDb().Where("no_hp = ? AND device_id = ?", credential.NoHp, credential.DeviceId).First(&merchant)
 	if err != nil {
 		return false
 	}

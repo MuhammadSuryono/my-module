@@ -1,12 +1,12 @@
-package middleware
+package http
 
 import (
 	"fmt"
-	"net/http"
-
-	"github.com/MuhammadSuryono1997/framework-okta/service"
+	err "github.com/MuhammadSuryono1997/framework-okta/base/error"
+	"github.com/MuhammadSuryono1997/framework-okta/base/service"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func AuthorizeJWT() gin.HandlerFunc {
@@ -18,7 +18,7 @@ func AuthorizeJWT() gin.HandlerFunc {
 		fmt.Println("Auth Header = ", authHeader)
 
 		if len(authHeader) == 0 {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"Error": "Missing Auth Header!"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, err.NOT_FOUND.AsInvalidResponse())
 			return
 		}
 		tokenString := authHeader[len(BEARER_SCHEMA):]

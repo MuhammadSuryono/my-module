@@ -1,4 +1,4 @@
-package config
+package database
 
 import (
 	"database/sql"
@@ -10,7 +10,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func (dbConfig *DBConfig) GetConnectionString() string {
+func (dbConfig DBConfig) GetConnectionString() string {
 	return fmt.Sprintf(
 		"%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
 		dbConfig.User,
