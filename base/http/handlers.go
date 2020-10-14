@@ -1,7 +1,6 @@
 package http
 
 import (
-	err "github.com/MuhammadSuryono1997/framework-okta/base/error"
 	"log"
 	"net/http"
 	"os"
@@ -22,7 +21,10 @@ func ServiceInfo(app string, message string, author string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		response := BaseResponse{
 			IsSuccess: true,
-			Error:     nil,
+			Error: ErrorCode{
+				200,
+				"Infor service",
+			},
 			Data: serviceInfo{
 				AppName: app,
 				Version: message,
@@ -56,7 +58,7 @@ func CreateHttpServer() *gin.Engine {
 	}))
 
 	server.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, err.NOT_FOUND.AsInvalidResponse())
+		c.JSON(http.StatusNotFound, NOT_FOUND.AsInvalidResponse())
 	})
 
 	server.GET("/", ServiceInfo(

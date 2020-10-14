@@ -33,3 +33,8 @@ func (err ErrorCode) AsValidResponse(data interface{}) BaseResponse {
 		Data:      data,
 	}
 }
+
+var NOT_FOUND = ErrorCode{
+	Code:    0001,
+	Message: "",
+}

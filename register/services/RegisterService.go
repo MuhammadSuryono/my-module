@@ -2,7 +2,8 @@ package services
 
 import (
 	"fmt"
-	"github.com/MuhammadSuryono1997/framework-okta/base/db"
+
+	db "github.com/MuhammadSuryono1997/framework-okta/base/database"
 
 	"github.com/MuhammadSuryono1997/framework-okta/register/models"
 )
