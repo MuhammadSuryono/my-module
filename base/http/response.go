@@ -1,4 +1,4 @@
-package httpresponse
+package http
 
 type ErrorCode struct {
 	Code    int
