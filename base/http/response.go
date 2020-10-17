@@ -1,5 +1,7 @@
 package http
 
+import "net/http"
+
 type ErrorCode struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
@@ -35,6 +37,6 @@ func (err ErrorCode) AsValidResponse(data interface{}) BaseResponse {
 }
 
 var NOT_FOUND = ErrorCode{
-	Code:    0001,
-	Message: "",
+	Code:    http.StatusBadRequest,
+	Message: "Not method allowed!",
 }
