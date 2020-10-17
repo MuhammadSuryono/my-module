@@ -1,8 +1,8 @@
 package http
 
 type ErrorCode struct {
-	Code    int
-	Message string
+	Code    int    `json:"code"`
+	Message string `json:"message"`
 }
 
 //0000: No Error

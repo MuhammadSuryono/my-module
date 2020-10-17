@@ -56,6 +56,6 @@ func isGoogleAuthenticatorCompatible(base32Secret string) bool {
 	return len(cleaned) == 16
 }
 
-func ValidateOtp(otp string) {
+func RequestOTP(nohp string) {
 
 }
