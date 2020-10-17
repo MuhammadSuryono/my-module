@@ -1,11 +1,13 @@
 package http
 
 import (
-	"log"
+	"fmt"
 	"net/http"
 	"os"
 	"time"
 
+	"github.com/MuhammadSuryono1997/framework-okta/base/database"
+	"github.com/MuhammadSuryono1997/framework-okta/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -23,7 +25,7 @@ func ServiceInfo(app string, message string, author string) gin.HandlerFunc {
 			IsSuccess: true,
 			Error: ErrorCode{
 				200,
-				"Infor service",
+				"Informasi service",
 			},
 			Data: serviceInfo{
 				AppName: app,
@@ -39,8 +41,10 @@ func CreateHttpServer() *gin.Engine {
 
 	errorEnv := godotenv.Load()
 	if errorEnv != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Println(string(utils.ColorYellow()), "Error loading .env file")
 	}
+
+	database.CreateConnection()
 
 	server := gin.Default()
 

@@ -28,7 +28,7 @@ func (err ErrorCode) AsInvalidResponse() BaseResponse {
 func (err ErrorCode) AsValidResponse(data interface{}) BaseResponse {
 
 	return BaseResponse{
-		IsSuccess: false,
+		IsSuccess: true,
 		Error:     err,
 		Data:      data,
 	}
