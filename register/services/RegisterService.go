@@ -32,7 +32,7 @@ func RegisterUser(credential *models.TMerchant) bool {
 	var merchant []models.TMerchant
 
 	err := db.GetDb().Where("no_hp = ? AND device_id = ?", credential.NoHp, credential.DeviceId).First(&merchant)
-	if err != nil {
+	if err == nil {
 		return false
 	}
 
