@@ -4,8 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
+	"strconv"
 	"time"
 
+	"github.com/MuhammadSuryono1997/framework-okta/utils"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -59,4 +62,23 @@ func pingDb(db *sql.DB) bool {
 		log.Print("mysql success ping")
 		return true
 	}
+}
+
+func CreateConnection() {
+
+	port, err := strconv.Atoi(os.Getenv("DATABASE_POST"))
+
+	if err != nil {
+		fmt.Println(string(utils.ColorYellow()), err)
+	}
+
+	dbConfig := DBConfig{
+		Host:     os.Getenv("DATABASE_HOST"),
+		Port:     port,
+		User:     os.Getenv("DATABASE_USERNAME"),
+		Password: os.Getenv("DATABASE_PASSWORD"),
+		DBName:   os.Getenv("DATABASE_NAME"),
+	}
+
+	Init(dbConfig)
 }
