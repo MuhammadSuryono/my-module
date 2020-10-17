@@ -51,17 +51,17 @@ func TimeStamp() string {
 	return formatted
 }
 
-func IsValidTimestamp(timestamp string) bool {
+// func IsValidTimestamp(timestamp string) bool {
 
-	timestamp, err := time.Parse("2006-01-02T15:04:05", timestamp)
-	if err != nil {
-		return false
-	}
+// 	timestamp, err := time.Parse("2006-01-02T15:04:05", timestamp)
+// 	if err != nil {
+// 		return false
+// 	}
 
-	fmt.Println(string(ColorCyan()), timestamp)
+// 	fmt.Println(string(ColorCyan()), timestamp)
 
-	return true
-}
+// 	return true
+// }
 
 func ColorYellow() string {
 	return "\033[33m"
