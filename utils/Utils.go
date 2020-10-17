@@ -1,9 +1,11 @@
 package utils
 
 import (
+	"fmt"
 	"math/rand"
 	"regexp"
 	"strings"
+	"time"
 )
 
 const colorReset = "\033[0m"
@@ -38,6 +40,27 @@ func MaskedNumber(nohp string) string {
 	re := regexp.MustCompile(`\b(\d{2})\d{10}\b`)
 	s := re.ReplaceAllString(nohp, "$1**********")
 	return s
+}
+
+func TimeStamp() string {
+	t := time.Now()
+	formatted := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+		t.Year(), t.Month(), t.Day(),
+		t.Hour(), t.Minute(), t.Second())
+
+	return formatted
+}
+
+func IsValidTimestamp(timestamp string) bool {
+
+	timestamp, err := time.Parse("2006-01-02T15:04:05", timestamp)
+	if err != nil {
+		return false
+	}
+
+	fmt.Println(string(ColorCyan()), timestamp)
+
+	return true
 }
 
 func ColorYellow() string {
