@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"github.com/MuhammadSuryono1997/framework-okta/base/service"
 	"github.com/MuhammadSuryono1997/framework-okta/register/models"
 	"github.com/MuhammadSuryono1997/framework-okta/register/services"
+	"github.com/MuhammadSuryono1997/framework-okta/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -33,8 +33,8 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 		return "Number is registered"
 	}
 
-	generateToken := service.JWTAuthService().GenerateToken(credential)
-	return generateToken
+	// generateToken := service.JWTAuthService().GenerateToken(credential)
+	return utils.MaskedNumber(credential.NoHp)
 
 }
 
@@ -62,5 +62,5 @@ func (controller *registerControllerStatic) RegisterStatic(ctx *gin.Context) str
 	if isUserAuthenticated {
 		return "Number is registered"
 	}
-	return credential.NoHp
+	return utils.MaskedNumber(credential.NoHp)
 }
