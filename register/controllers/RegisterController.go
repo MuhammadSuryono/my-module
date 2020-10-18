@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/MuhammadSuryono1997/framework-okta/base/database"
+	db "github.com/MuhammadSuryono1997/framework-okta/base/database"
 	"github.com/MuhammadSuryono1997/framework-okta/register/models"
 	"github.com/MuhammadSuryono1997/framework-okta/register/services"
 	"github.com/MuhammadSuryono1997/framework-okta/utils"
@@ -24,15 +27,25 @@ func RegisterHandler(registerService services.RegisterService) RegisterControlle
 
 func (controller *registerController) RegisterUser(c *gin.Context) string {
 	var credential *models.TMerchant
+	var merchant []models.TMerchant
 
 	if err := c.ShouldBindJSON(&credential); err != nil {
 		return "Error input"
 	}
 
-	isUserRegistered := controller.registerService.RegisterUser(credential)
-	if isUserRegistered {
+	err := db.GetDb().Where("no_hp = ?", credential.NoHp).First(&merchant)
+	if err.RowsAffected > 0 {
 		return "Number is registered"
 	}
+
+	fmt.Println(merchant)
+
+	// return true
+
+	// isUserRegistered := controller.registerService.RegisterUser(credential)
+	// if isUserRegistered {
+	// 	return "Number is registered"
+	// }
 
 	// generateToken := service.JWTAuthService().GenerateToken(credential)
 	database.GetDb().Select(&credential)
