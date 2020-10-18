@@ -31,7 +31,7 @@ func StaticRegisterService() RegisterServiceStatic {
 func RegisterUser(credential *models.TMerchant) bool {
 	var merchant []models.TMerchant
 
-	err := db.GetDb().Where("no_hp = ?", credential.NoHp).First(&merchant)
+	err := db.GetDb().Where("no_hp = ?", credential.PhoneNumber).First(&merchant)
 	if err == nil {
 		return false
 	}

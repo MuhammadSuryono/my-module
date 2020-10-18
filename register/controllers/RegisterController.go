@@ -33,7 +33,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 		return "Error input"
 	}
 
-	err := db.GetDb().Where("no_hp = ?", credential.NoHp).First(&merchant)
+	err := db.GetDb().Where("no_hp = ?", credential.PhoneNumber).First(&merchant)
 	if err.RowsAffected > 0 {
 		return "Number is registered"
 	}
@@ -49,7 +49,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 
 	// generateToken := service.JWTAuthService().GenerateToken(credential)
 	database.GetDb().Select(&credential)
-	return credential.NoHp
+	return credential.PhoneNumber
 
 }
 
@@ -73,9 +73,9 @@ func (controller *registerControllerStatic) RegisterStatic(ctx *gin.Context) str
 	if err != nil {
 		return "Error input"
 	}
-	isUserAuthenticated := controller.registerService.RegisterStatic(credential.DeviceId, credential.NoHp)
+	isUserAuthenticated := controller.registerService.RegisterStatic(credential.DeviceId, credential.PhoneNumber)
 	if isUserAuthenticated {
 		return "Number is registered"
 	}
-	return utils.MaskedNumber(credential.NoHp)
+	return utils.MaskedNumber(credential.PhoneNumber)
 }
