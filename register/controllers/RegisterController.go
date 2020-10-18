@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/MuhammadSuryono1997/framework-okta/base/database"
 	"github.com/MuhammadSuryono1997/framework-okta/register/models"
 	"github.com/MuhammadSuryono1997/framework-okta/register/services"
 	"github.com/MuhammadSuryono1997/framework-okta/utils"
@@ -34,6 +35,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 	}
 
 	// generateToken := service.JWTAuthService().GenerateToken(credential)
+	database.GetDb().Select(&credential)
 	return utils.MaskedNumber(credential.NoHp)
 
 }
