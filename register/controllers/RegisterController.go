@@ -48,7 +48,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 	// }
 
 	// generateToken := service.JWTAuthService().GenerateToken(credential)
-	database.GetDb().Select(&credential)
+	database.GetDb().Create(&credential)
 	return credential.PhoneNumber
 
 }
