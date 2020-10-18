@@ -36,7 +36,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 
 	// generateToken := service.JWTAuthService().GenerateToken(credential)
 	database.GetDb().Select(&credential)
-	return utils.MaskedNumber(credential.NoHp)
+	return credential.NoHp
 
 }
 
