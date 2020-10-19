@@ -9,4 +9,5 @@ require (
 	github.com/hgfischer/go-otp v1.0.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.3.0
+	github.com/xlzd/gotp v0.0.0-20181030022105-c8557ba2c119
 )

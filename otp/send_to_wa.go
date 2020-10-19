@@ -20,11 +20,11 @@ type StructWA struct {
 	Message   string `json:"message"`
 }
 
-func SendToWA(nohp string) (string, error) {
+func SendToWA(nohp string, otp string) (string, error) {
 	pesan := &StructWA{
 		To:        nohp,
 		ShortName: SHORT_NAME,
-		Message:   utils.MessageRegistrasi(GenerateOTP(30)),
+		Message:   utils.MessageRegistrasi(otp),
 	}
 
 	jsonReq, err := json.Marshal(pesan)

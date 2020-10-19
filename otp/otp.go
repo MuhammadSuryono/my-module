@@ -4,10 +4,12 @@ import (
 	"encoding/base32"
 	"flag"
 	"fmt"
+	"math/rand"
 	"strings"
 
 	"github.com/MuhammadSuryono1997/framework-okta/utils"
 	"github.com/hgfischer/go-otp"
+	"github.com/xlzd/gotp"
 )
 
 var (
@@ -56,6 +58,22 @@ func isGoogleAuthenticatorCompatible(base32Secret string) bool {
 	return len(cleaned) == 16
 }
 
-func RequestOTP(nohp string) {
+func GenerateHOTP() (string, string, int) {
+	secret := gotp.RandomSecret(32)
+	rand := rand.Intn(100)
+	otp := gotp.NewHOTP(secret, 4, nil)
 
+	return otp.At(rand), secret, rand
+}
+
+func RequestOTP(nohp string) (string, int) {
+	otp, secret, rand := GenerateHOTP()
+	send, err := SendToWA(nohp, otp)
+
+	if err != nil {
+		fmt.Println(string(utils.ColorYellow()), err)
+	}
+	fmt.Println(string(utils.ColorYellow()), "OTP SUCCESS SENDING TO "+send)
+
+	return secret, rand
 }

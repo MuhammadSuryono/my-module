@@ -3,7 +3,6 @@ package controllers
 import (
 	"fmt"
 
-	"github.com/MuhammadSuryono1997/framework-okta/base/database"
 	db "github.com/MuhammadSuryono1997/framework-okta/base/database"
 	"github.com/MuhammadSuryono1997/framework-okta/register/models"
 	"github.com/MuhammadSuryono1997/framework-okta/register/services"
@@ -33,7 +32,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 		return "Error input"
 	}
 
-	err := db.GetDb().Where("no_hp = ?", credential.PhoneNumber).First(&merchant)
+	err := db.GetDb().Where("phone_number = ?", credential.PhoneNumber).First(&merchant)
 	if err.RowsAffected > 0 {
 		return "Number is registered"
 	}
@@ -48,7 +47,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 	// }
 
 	// generateToken := service.JWTAuthService().GenerateToken(credential)
-	database.GetDb().Create(&credential)
+	// database.GetDb().Create(&credential)
 	return credential.PhoneNumber
 
 }
