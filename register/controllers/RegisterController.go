@@ -1,14 +1,21 @@
 package controllers
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 
+	"github.com/MuhammadSuryono1997/framework-okta/base/database"
 	db "github.com/MuhammadSuryono1997/framework-okta/base/database"
 	"github.com/MuhammadSuryono1997/framework-okta/register/models"
 	"github.com/MuhammadSuryono1997/framework-okta/register/services"
 	"github.com/MuhammadSuryono1997/framework-okta/utils"
 	"github.com/gin-gonic/gin"
 )
+
+const URL_OTP = "http://localhost:5005/request-otp"
 
 type RegisterController interface {
 	RegisterUser(c *gin.Context) string
@@ -38,16 +45,10 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 	}
 
 	fmt.Println(merchant)
+	fmt.Println("Request OTP ....")
+	database.GetDb().Create(&credential)
+	RequestOTP(credential.PhoneNumber)
 
-	// return true
-
-	// isUserRegistered := controller.registerService.RegisterUser(credential)
-	// if isUserRegistered {
-	// 	return "Number is registered"
-	// }
-
-	// generateToken := service.JWTAuthService().GenerateToken(credential)
-	// database.GetDb().Create(&credential)
 	return credential.PhoneNumber
 
 }
@@ -77,4 +78,22 @@ func (controller *registerControllerStatic) RegisterStatic(ctx *gin.Context) str
 		return "Number is registered"
 	}
 	return utils.MaskedNumber(credential.PhoneNumber)
+}
+
+func RequestOTP(nohp string) (string, error) {
+
+	jsonReq, err := json.Marshal(map[string]interface{}{"phone_number": nohp})
+	resp, err := http.NewRequest("POST", URL_OTP, bytes.NewBuffer(jsonReq))
+	client := &http.Client{}
+	req, err := client.Do(resp)
+
+	if err != nil {
+		fmt.Println(string(utils.ColorYellow()), err)
+		return "", err
+	}
+	body, _ := ioutil.ReadAll(req.Body)
+	fmt.Println(string(utils.ColorCyan()), string(body))
+
+	return "Success request", nil
+
 }
