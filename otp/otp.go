@@ -77,3 +77,10 @@ func RequestOTP(nohp string) (string, int) {
 
 	return secret, rand
 }
+
+func ValidateHOTP(secret string, rand int, otp string) bool {
+	hotp := gotp.NewHOTP(secret, 4, nil)
+	valid := hotp.Verify(otp, rand)
+
+	return valid
+}
