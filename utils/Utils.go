@@ -16,6 +16,7 @@ const colorBlue = "\033[34m"
 const colorPurple = "\033[35m"
 const colorCyan = "\033[36m"
 const colorWhite = "\033[37m"
+const formattime = time.RFC3339
 
 func ToUpper(string string) string {
 	return strings.ToUpper(string)
@@ -51,10 +52,26 @@ func TimeStamp() string {
 	return formatted
 }
 
+func CompareTime(start, end, check time.Time) bool {
+	return check.After(start) && check.Before(end)
+}
+
+func TimeNow() string {
+	return time.Now().Format(time.RFC3339)
+}
+
+func TimeAdd(minute time.Duration) string {
+	return time.Now().Add(minute).Format(time.RFC3339)
+}
+
 func ColorYellow() string {
-	return "\033[33m"
+	return colorYellow
 }
 
 func ColorCyan() string {
-	return "\033[36m"
+	return colorCyan
+}
+
+func ColorRed() string {
+	return colorRed
 }

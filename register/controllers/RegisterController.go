@@ -69,6 +69,7 @@ func RegisterHandlerStatic(registerService services.RegisterServiceStatic) Regis
 
 func (controller *registerControllerStatic) RegisterStatic(ctx *gin.Context) string {
 	var credential *models.TMerchant
+	// resp.Header.Add("Authorization", BEARER)
 	err := ctx.ShouldBind(&credential)
 	if err != nil {
 		return "Error input"
