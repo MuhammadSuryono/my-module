@@ -31,8 +31,8 @@ func RandStringRunes(n int) string {
 	return string(b)
 }
 
-func MessageRegistrasi(code string) string {
-	message := "Kode registrasi anda: *" + code + "* Jangan pernah memberikan kode ini ke siapapun, walaupun mereka mengatakan dari *OKTA POS!!*\n\nKode ini dapat digunakan untuk melanjutkan pendaftaran anda.\n\nJika anda tidak melakukan permintaan kode registrasi ini, maka abaikan pesan ini."
+func MessageWA(code string) string {
+	message := "Kode anda: *" + code + "* Jangan pernah memberikan kode ini ke siapapun, walaupun mereka mengatakan dari *OKTA POS!!*.\n\nJika anda tidak melakukan permintaan kode registrasi ini, maka abaikan pesan ini."
 	return message
 }
 

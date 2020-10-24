@@ -24,7 +24,7 @@ func SendToWA(nohp string, otp string) (string, error) {
 	pesan := &StructWA{
 		To:        nohp,
 		ShortName: SHORT_NAME,
-		Message:   utils.MessageRegistrasi(otp),
+		Message:   utils.MessageWA(otp),
 	}
 
 	jsonReq, err := json.Marshal(pesan)
