@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/MuhammadSuryono1997/framework-okta/base/database"
 	db "github.com/MuhammadSuryono1997/framework-okta/base/database"
@@ -87,7 +88,7 @@ func (controller *registerControllerStatic) RegisterStatic(ctx *gin.Context) str
 func RequestOTP(nohp string) (string, error) {
 
 	jsonReq, err := json.Marshal(map[string]interface{}{"phone_number": nohp})
-	resp, err := http.NewRequest("POST", URL_OTP, bytes.NewBuffer(jsonReq))
+	resp, err := http.NewRequest("POST", os.Getenv("URL_OTP"), bytes.NewBuffer(jsonReq))
 	client := &http.Client{}
 	req, err := client.Do(resp)
 
