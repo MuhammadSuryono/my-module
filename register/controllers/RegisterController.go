@@ -39,7 +39,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 		return "Error input"
 	}
 
-	err := db.GetDb().Where("phone_number = ?", credential.PhoneNumber).First(&merchant)
+	err := db.GetDb().Where("phone_number = ? AND is_register = ?", credential.PhoneNumber, 1).First(&merchant)
 	if err.RowsAffected > 0 {
 		return "Number is registered"
 	}
@@ -47,7 +47,10 @@ func (controller *registerController) RegisterUser(c *gin.Context) string {
 	fmt.Println(merchant)
 	fmt.Println("Request OTP ....")
 	database.GetDb().Create(&credential)
-	RequestOTP(credential.PhoneNumber)
+	_, er := RequestOTP(credential.PhoneNumber)
+	if er != nil {
+		return er.Error()
+	}
 
 	return credential.PhoneNumber
 
