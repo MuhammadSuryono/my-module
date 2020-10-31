@@ -19,7 +19,7 @@ import (
 const URL_OTP = "http://localhost:5005/request-otp"
 
 type RegisterController interface {
-	RegisterUser(c *gin.Context) string
+	RegisterUser(c *gin.Context) (string, string)
 }
 
 type RegisterMerchant struct {
@@ -54,7 +54,7 @@ func (controller *registerController) RegisterUser(c *gin.Context) (string, stri
 			if er != nil {
 				return "", er.Error()
 			}
-			database.GetDb().Table("t_merchants").Where("phone_number", credential.PhoneNumber).Updates(map[string]interface{}{"device_id": credential.DeviceId})
+			database.GetDb().Table("t_merchants").Where("phone_number = ?", credential.PhoneNumber).Updates(map[string]interface{}{"device_id": credential.DeviceId})
 
 			return credential.PhoneNumber, ""
 		}
@@ -63,11 +63,11 @@ func (controller *registerController) RegisterUser(c *gin.Context) (string, stri
 	}
 
 	fmt.Println("Request OTP ....")
+	database.GetDb().Create(&credential)
 	_, er := RequestOTP(credential.PhoneNumber)
 	if er != nil {
 		return "", er.Error()
 	}
-	database.GetDb().Create(&credential)
 
 	return credential.PhoneNumber, ""
 
