@@ -22,6 +22,11 @@ type RegisterController interface {
 	RegisterUser(c *gin.Context) string
 }
 
+type RegisterMerchant struct {
+	IsRegister bool `json:"is_register"`
+	models.TMerchant
+}
+
 type registerController struct {
 	registerService services.RegisterService
 }
@@ -32,28 +37,39 @@ func RegisterHandler(registerService services.RegisterService) RegisterControlle
 	}
 }
 
-func (controller *registerController) RegisterUser(c *gin.Context) string {
+func (controller *registerController) RegisterUser(c *gin.Context) (string, string) {
 	var credential *models.TMerchant
-	var merchant []models.TMerchant
+	var merchant RegisterMerchant
 
 	if err := c.ShouldBindJSON(&credential); err != nil {
-		return "Error input"
+		return "", "Error input!"
 	}
 
-	err := db.GetDb().Where("phone_number = ? AND is_register = ?", credential.PhoneNumber, 1).First(&merchant)
+	err := db.GetDb().Table("t_merchants").Where("phone_number = ?", credential.PhoneNumber).Scan(&merchant)
 	if err.RowsAffected > 0 {
-		return "Number is registered"
+
+		if !merchant.IsRegister {
+			fmt.Println("Request OTP ....")
+			_, er := RequestOTP(credential.PhoneNumber)
+			if er != nil {
+				return "", er.Error()
+			}
+			database.GetDb().Table("t_merchants").Where("phone_number", credential.PhoneNumber).Updates(map[string]interface{}{"device_id": credential.DeviceId})
+
+			return credential.PhoneNumber, ""
+		}
+
+		return "", "Number is registered"
 	}
 
-	fmt.Println(merchant)
 	fmt.Println("Request OTP ....")
-	database.GetDb().Create(&credential)
 	_, er := RequestOTP(credential.PhoneNumber)
 	if er != nil {
-		return er.Error()
+		return "", er.Error()
 	}
+	database.GetDb().Create(&credential)
 
-	return credential.PhoneNumber
+	return credential.PhoneNumber, ""
 
 }
 
@@ -93,7 +109,7 @@ func RequestOTP(nohp string) (string, error) {
 	req, err := client.Do(resp)
 
 	if err != nil {
-		fmt.Println(string(utils.ColorYellow()), err)
+		fmt.Println(string(utils.ColorRed()), err)
 		return "", err
 	}
 	body, _ := ioutil.ReadAll(req.Body)
